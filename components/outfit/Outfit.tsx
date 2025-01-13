@@ -1,0 +1,44 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { getOutfitItems, getOutfitById, getOutfits } from "@/data/outfit";
+import Link from "next/link";
+
+export default function Outfit() {
+  const [outfit, setOutfit] = useState([]);
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    getOutfits().then((data: any) => {
+      setOutfit(data || []);
+    });
+  }, []);
+
+  return (
+    <Link href={"/user"} className="flex gap-5">
+      {outfit.map((item: any) => {
+        return (
+          <div
+            key={item.id}
+            className="flex flex-col border-2 border-black rounded-lg p-4 gap-2"
+          >
+            <p>{item.title}</p>
+            <p className="grid grid-cols-2">
+              {item.cloths.map((cloth: any) => {
+                return (
+                  <div
+                    key={cloth.id}
+                    className="flex border-2 border-black rounded-lg p-4 flex-row gap-2"
+                  >
+                    <p>{cloth.name}</p>
+                    <p>{cloth.price}</p>
+                  </div>
+                );
+              })}
+            </p>
+          </div>
+        );
+      })}
+    </Link>
+  );
+}
