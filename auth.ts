@@ -5,14 +5,6 @@ import { getUserById } from "./data/user"
 import authConfig from "./auth.config"
 import { db } from "./db"
 
-declare module "next-auth" {
-  interface Session {
-    user: {
-      role: any
-    } & DefaultSession["user"]
-  }
-}
-
 export const {
   handlers: { GET, POST },
   auth,
@@ -20,13 +12,6 @@ export const {
   signOut,
 } = NextAuth({
   callbacks: {
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.role = token.role;
-      }
-
-      return session;
-    },
 
     async jwt({ token }) {
       if (!token.sub) return token;

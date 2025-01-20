@@ -133,7 +133,7 @@ model Comment {
 model Cloth {
   id     Int      @id @default(autoincrement())
   name   String
-  isAd   IsAd
+  isAd   IsAd     @default(AdFree)
   Image  Image[]
   brands Brand[]  @relation("ClothBrands")
   outfit Outfit[]
@@ -151,7 +151,7 @@ model Brand {
 }
 
 model Outfit {
-  id          Int     @id
+  id          Int     @id @default(autoincrement())
   title       String
   description String
   image_id    Image?  @relation(fields: [imageId], references: [id], onDelete: Cascade)
@@ -161,7 +161,7 @@ model Outfit {
 }
 
 model Style {
-  id     Int      @id
+  id     Int      @id @default(autoincrement())
   name   String
   cloth  Cloth[]
   brand  Brand[]

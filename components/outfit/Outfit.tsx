@@ -14,9 +14,13 @@ export default function Outfit() {
     });
   }, []);
 
+  const sortedOutfit = [...outfit]
+  .sort((a: any, b: any) => b.createdAt - a.createdAt)
+  .slice(0, 3);
+
   return (
     <Link href={"/user"} className="flex gap-5">
-      {outfit.map((item: any) => {
+      {sortedOutfit.map((item: any) => {
         return (
           <div
             key={item.id}
