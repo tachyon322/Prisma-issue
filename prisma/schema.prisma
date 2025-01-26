@@ -134,7 +134,7 @@ model Cloth {
   id     Int      @id @default(autoincrement())
   name   String
   rating Int
-  isAd   IsAd
+  isAd   IsAd     @default(AdFree)
   Image  Image[]
   brands Brand[]  @relation("ClothBrands")
   outfit Outfit[]
@@ -163,7 +163,7 @@ model Outfit {
 }
 
 model Style {
-  id     Int      @id
+  id     Int      @id @default(autoincrement())
   name   String
   cloth  Cloth[]
   brand  Brand[]
