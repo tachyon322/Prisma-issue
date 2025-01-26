@@ -11,7 +11,7 @@ export default async function HeaderElement() {
   const userImage = session?.user?.image;
 
   return (
-    <div className="flex items-center justify-between gap-10 pt-2.5">
+    <div className="flex items-center justify-between gap-10 pt-2.5 mb-10">
       <Link className="flex-1 text-left" href={"/"}>
         <Image src={logo} width={150} height={50} alt="logo" />
       </Link>

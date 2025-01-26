@@ -1,18 +1,8 @@
 import "./globals.css";
-import Image from "next/image";
-import bannerImg from "@/app/assets/svg/bannerLogo2.svg";
-import bannerImg2 from "@/app/assets/svg/bannerLogo3.svg";
 import HeaderElement from "@/components/HeaderElement";
-import { db } from "@/db";
-import Outfit from "@/components/outfit/Outfit";
+import Outfit from "@/components/outfit/MainMenuOutfit";
 
 export default async function Home() {
-  const outfits = await db.outfit.findMany({
-    select: {
-      id: true,
-      title: true,
-    },
-  });
 
   return (
     <div className="wide-wrap">
@@ -26,6 +16,10 @@ export default async function Home() {
 
       <div className="mt-28">
         <Outfit />
+      </div>
+
+      <div className="">
+        
       </div>
     </div>
   );
