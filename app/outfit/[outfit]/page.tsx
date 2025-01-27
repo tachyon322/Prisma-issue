@@ -17,7 +17,7 @@ interface Cloth {
   rating: number;
   isAd: string;
   userId: string | null;
-  Image: ClothImage[];
+  image: ClothImage[];
 }
 
 interface OutfitType {
@@ -47,10 +47,10 @@ export default function Outfit({ params }: { params: { outfit: string } }) {
               key={item.id}
               className="w-[300px] h-[300px] rounded-lg border-black border-2 flex items-center justify-center"
             >
-              {item.Image[0]?.url ? (
+              {item.image[0]?.url ? (
                 <Image
                   className="rounded-lg"
-                  src={item.Image[0].url}
+                  src={item.image[0].url}
                   alt={item.name || "Cloth image"}
                   width={300}
                   height={300}

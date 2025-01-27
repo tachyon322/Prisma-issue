@@ -8,7 +8,7 @@ export const getOutfits = async () => {
       include: {
         cloths: {
           select: {
-            Image: true,
+            image: true,
             name: true,
             id: true,
           },
@@ -45,7 +45,7 @@ export const getOutfitById = async (id: any) => {
   try {
     const item = await db.outfit.findUnique({
       where: { id },
-      include: { cloths: { include: { Image: true } } },
+      include: { cloths: { include: { image: true } } },
     });
     if (!item) {
       console.warn("Outfit not found for id:", id);
