@@ -134,7 +134,7 @@ model Cloth {
   id     Int      @id @default(autoincrement())
   name   String
   isAd   IsAd     @default(AdFree)
-  Image  Image[]
+  image  Image[]
   brands Brand[]  @relation("ClothBrands")
   outfit Outfit[]
   style  Style[]

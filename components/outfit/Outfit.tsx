@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { getOutfitItems, getOutfitById, getOutfits } from "@/data/outfit";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Outfit() {
   const [outfit, setOutfit] = useState([]);
@@ -15,8 +16,8 @@ export default function Outfit() {
   }, []);
 
   const sortedOutfit = [...outfit]
-  .sort((a: any, b: any) => b.createdAt - a.createdAt)
-  .slice(0, 3);
+    .sort((a: any, b: any) => b.createdAt - a.createdAt)
+    .slice(0, 3);
 
   return (
     <Link href={"/user"} className="flex gap-5">
@@ -24,25 +25,25 @@ export default function Outfit() {
         return (
           <div
             key={item.id}
-            className="flex flex-col border-2 border-black rounded-lg p-4 gap-2"
-          >
+            className="flex flex-col border-2 border-black rounded-lg p-4 gap-2">
             <p>{item.title}</p>
-            <p className="grid grid-cols-2">
+            <div className="grid grid-cols-2">
               {item.cloths.map((cloth: any) => {
                 return (
                   <div
                     key={cloth.id}
-                    className="flex border-2 border-black rounded-lg p-4 flex-row gap-2"
-                  >
-                    <p>{cloth.name}</p>
-                    <p>{cloth.price}</p>
+                    className="flex border-2 border-black rounded-lg p-4 flex-row gap-2">
+
                   </div>
                 );
               })}
-            </p>
+            </div>
           </div>
         );
       })}
     </Link>
   );
+}
+{
+  /* <Image src={cloth.image} alt={cloth.name} width={100} height={100} /> */
 }
