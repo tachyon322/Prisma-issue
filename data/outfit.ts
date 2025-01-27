@@ -6,7 +6,13 @@ export const getOutfits = async () => {
   try {
     const items = await db.outfit.findMany({
       include: {
-        cloths: true,
+        cloths: {
+          select: {
+            Image: true,
+            name: true,
+            id: true,
+          },
+        },
       },
     });
     return items;
@@ -37,9 +43,16 @@ export const getOutfitItems = async (id: any) => {
 
 export const getOutfitById = async (id: any) => {
   try {
-    const item = await db.outfit.findUnique({ where: { id } });
+    const item = await db.outfit.findUnique({
+      where: { id },
+      include: { cloths: { include: { Image: true } } },
+    });
+    if (!item) {
+      console.warn("Outfit not found for id:", id);
+    }
     return item;
-  } catch {
+  } catch (error) {
+    console.error("Ошибка при получении outfit:", error);
     return null;
   }
 };

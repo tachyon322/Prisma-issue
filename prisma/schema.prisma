@@ -133,6 +133,7 @@ model Comment {
 model Cloth {
   id     Int      @id @default(autoincrement())
   name   String
+  rating Int
   isAd   IsAd     @default(AdFree)
   image  Image[]
   brands Brand[]  @relation("ClothBrands")
@@ -145,6 +146,7 @@ model Cloth {
 model Brand {
   id          Int     @id @default(autoincrement())
   name        String
+  rating      Int
   description String
   cloths      Cloth[] @relation("ClothBrands")
   style       Style[]
