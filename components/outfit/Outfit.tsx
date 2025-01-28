@@ -40,6 +40,3 @@ export default function Outfit() {
     </Link>
   );
 }
-{
-  /* <Image src={cloth.image} alt={cloth.name} width={100} height={100} /> */
-}

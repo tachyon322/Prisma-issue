@@ -1,10 +1,12 @@
 import React from 'react'
 
-export default function page() {
+export default function page({ params }: { params: { item: string } }) {
+
+  const itemID = Number(params.item)
   return (
     <div>
         <h1>Item</h1>
-        <p>{}</p>
+        <p>{itemID}</p>
     </div>
   )
 }

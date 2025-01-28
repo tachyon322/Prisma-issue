@@ -2,7 +2,7 @@
 
 import { getOutfitById } from "@/data/outfit";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
+import ClothList from "@/components/outfit/ClothList";
 
 interface ClothImage {
   id: number;
@@ -40,34 +40,10 @@ export default function Outfit({ params }: { params: { outfit: string } }) {
   if (!outfit) return <div>Загрузка...</div>;
 
   return (
-    <div className="flex gap-3">
-      <div className="flex gap-3">
-        {outfit.cloths?.length
-          ? outfit.cloths.map((item) => (
-              <div
-                key={item.id}
-                className="w-[300px] h-[300px] rounded-lg border-black border-2 flex items-center justify-center">
-                {item.image[0]?.url ? (
-                  <Image
-                    className="rounded-lg"
-                    src={item.image[0].url || ""}
-                    alt={item.name || "Cloth image"}
-                    width={300}
-                    height={300}
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = "none";
-                    }}
-                  />
-                ) : (
-                  <div className="">
-                    <p>Нет изображения</p>
-                  </div>
-                )}
-              </div>
-            ))
-          : "В этом аутфите нет одежды... Очень Странно!"}
-      </div>
-      <p>{outfit.title}</p>
+    <div className="flex flex-col gap-3">
+      <h1>{outfit.title}</h1>
+      <ClothList cloths={outfit.cloths} />
+      
     </div>
   );
 }

@@ -18,12 +18,12 @@ export default async function HeaderElement() {
 
       <ul className="flex gap-6 justify-center flex-1 ">
         <li className="btn-anim1">
-          <Link href={"/main"}>
+          <Link href={"/newest"}>
             <p>главная</p>
           </Link>
         </li>
         <li className="btn-anim1">
-          <Link href={"/main"}>
+          <Link href={"/newest"}>
             <p>вещи</p>
           </Link>
         </li>
@@ -45,12 +45,12 @@ export default async function HeaderElement() {
             {userImage === "" ? (
               <div className="flex items-center gap-2">
                 <Image className="w-8 h-8 rounded-full" src={userImage} width={32} height={32} alt="User Image" />
-                <p className="text-sm font-medium">{session.user.name}</p>
+                <p className="text-sm font-medium">{session.user?.name}</p>
               </div>
             ) : (
               <div className="flex items-center gap-2">
                 <Image className="w-8 h-8" src={userBlankLogo} width={32} height={32} alt="Default" />
-                <p className="text-sm font-medium">{session.user.name}</p>
+                <p className="text-sm font-medium">{session.user?.name}</p>
               </div>
             )}
           </div>
