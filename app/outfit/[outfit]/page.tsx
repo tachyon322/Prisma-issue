@@ -17,7 +17,7 @@ interface Cloth {
   rating: number;
   isAd: string;
   userId: string | null;
-  Image: ClothImage[];
+  image: ClothImage[];
 }
 
 interface OutfitType {
@@ -41,31 +41,33 @@ export default function Outfit({ params }: { params: { outfit: string } }) {
 
   return (
     <div className="flex gap-3">
-      {outfit.cloths?.length
-        ? outfit.cloths.map((item) => (
-            <div
-              key={item.id}
-              className="w-[300px] h-[300px] rounded-lg border-black border-2 flex items-center justify-center"
-            >
-              {item.Image[0]?.url ? (
-                <Image
-                  className="rounded-lg"
-                  src={item.Image[0].url}
-                  alt={item.name || "Cloth image"}
-                  width={300}
-                  height={300}
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = "none";
-                  }}
-                />
-              ) : (
-                <div className="">
-                  <p>Нет изображения</p>
-                </div>
-              )}
-            </div>
-          ))
-        : "В этом аутфите нет одежды... Очень Странно!"}
+      <div className="flex gap-3">
+        {outfit.cloths?.length
+          ? outfit.cloths.map((item) => (
+              <div
+                key={item.id}
+                className="w-[300px] h-[300px] rounded-lg border-black border-2 flex items-center justify-center">
+                {item.image[0]?.url ? (
+                  <Image
+                    className="rounded-lg"
+                    src={item.image[0].url || ""}
+                    alt={item.name || "Cloth image"}
+                    width={300}
+                    height={300}
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.display = "none";
+                    }}
+                  />
+                ) : (
+                  <div className="">
+                    <p>Нет изображения</p>
+                  </div>
+                )}
+              </div>
+            ))
+          : "В этом аутфите нет одежды... Очень Странно!"}
+      </div>
+      <p>{outfit.title}</p>
     </div>
   );
 }

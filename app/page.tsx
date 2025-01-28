@@ -17,10 +17,6 @@ export default async function Home() {
       <div className="mt-28">
         <Outfit />
       </div>
-
-      <div className="">
-        
-      </div>
     </div>
   );
 }

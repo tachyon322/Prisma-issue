@@ -1,13 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { getOutfitItems, getOutfitById, getOutfits } from "@/data/outfit";
+import { getOutfits } from "@/data/outfit";
 import Link from "next/link";
-import Image from "next/image";
 
 export default function Outfit() {
   const [outfit, setOutfit] = useState([]);
-  const [name, setName] = useState("");
 
   useEffect(() => {
     getOutfits().then((data: any) => {
@@ -32,9 +30,7 @@ export default function Outfit() {
                 return (
                   <div
                     key={cloth.id}
-                    className="flex border-2 border-black rounded-lg p-4 flex-row gap-2">
-
-                  </div>
+                    className="flex border-2 border-black rounded-lg p-4 flex-row gap-2"></div>
                 );
               })}
             </div>
