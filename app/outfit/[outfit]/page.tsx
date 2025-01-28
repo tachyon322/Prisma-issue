@@ -40,10 +40,12 @@ export default function Outfit({ params }: { params: { outfit: string } }) {
   if (!outfit) return <div>Загрузка...</div>;
 
   return (
-    <div className="flex flex-col gap-3">
-      <h1>{outfit.title}</h1>
+    <div className="flex gap-3">
       <ClothList cloths={outfit.cloths} />
-      
+      <div className="w-[300px]">
+        <h1>{outfit.title}</h1>
+        <p>{outfit.description}</p>
+      </div>
     </div>
   );
 }

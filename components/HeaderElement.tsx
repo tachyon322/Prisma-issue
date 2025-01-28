@@ -2,9 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "@/app/assets/svg/logo.svg";
 import React from "react";
-import { Button } from "./ui/button";
 import { auth } from "@/auth";
-import userBlankLogo from "@/app/assets/svg/userBlankLogo.svg";
+import UserProfile from "./image/UserAvatar";
 
 export default async function HeaderElement() {
   const session = await auth();
@@ -39,29 +38,7 @@ export default async function HeaderElement() {
         </li>
       </ul>
 
-      {session ? (
-        <Link className="flex items-center gap-3 flex-1 justify-end" href="/user">
-          <div className="">
-            {userImage === "" ? (
-              <div className="flex items-center gap-2">
-                <Image className="w-8 h-8 rounded-full" src={userImage} width={32} height={32} alt="User Image" />
-                <p className="text-sm font-medium">{session.user?.name}</p>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2">
-                <Image className="w-8 h-8" src={userBlankLogo} width={32} height={32} alt="Default" />
-                <p className="text-sm font-medium">{session.user?.name}</p>
-              </div>
-            )}
-          </div>
-        </Link>
-      ) : (
-        <Link className="flex items-center gap-3 flex-1 justify-end" href="/login">
-          <Button>
-            <p>Войти</p>
-          </Button>
-        </Link>
-      )}
+      <UserProfile showName={true} avatarSize={32} />
     </div>
   );
 }

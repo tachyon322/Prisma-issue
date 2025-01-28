@@ -24,18 +24,18 @@ interface ClothListProps {
 
 const ClothList: React.FC<ClothListProps> = ({ cloths }) => {
   return (
-    <div className="flex gap-3">
+    <div className="w-fit h-[730px] grid grid-cols-2 gap-3 overflow-y-scroll">
       {cloths.length ? (
         cloths.map((item) => (
           <Link key={item.id} href={`/item/${item.id}`}>
-            <div className="w-[300px] h-[300px] rounded-lg border-black border-2 flex items-center justify-center">
+            <div className="w-[300px] h-[300px] rounded-lg border-black border-2 flex items-center justify-center overflow-hidden relative">
               {item.image[0]?.url ? (
                 <Image
-                  className="rounded-lg"
+                  className="object-cover"
                   src={item.image[0].url}
                   alt={item.name || "Cloth image"}
-                  width={300}
-                  height={300}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 300px"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = "none";
                   }}

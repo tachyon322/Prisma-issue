@@ -1,9 +1,17 @@
 import NextAuth, { type DefaultSession } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
 import { getUserById } from "./data/user";
 import authConfig from "./auth.config";
 import { db } from "./db";
+
+declare module "next-auth" {
+  interface Session extends DefaultSession {
+    user: {
+      id: string;
+      // Другие пользовательские свойства
+    } & DefaultSession["user"];
+  }
+}
 
 export const {
   handlers: { GET, POST },
@@ -19,10 +27,24 @@ export const {
 
       if (!existingUser) return token;
 
+      // Добавляем ID пользователя в токен
+      token.id = existingUser.id;
       token.role = existingUser.role;
 
       return token;
     },
+    async session({ session, token }) {
+      if (token.sub && session.user) {
+        session.user.id = token.sub;
+      }
+      
+      // Добавляем дополнительные поля из токена в сессию
+      if (token.role && session.user) {
+        session.user.role = token.role;
+      }
+      
+      return session;
+    }
   },
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },

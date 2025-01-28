@@ -4,7 +4,7 @@ export const publicRoutes = [
     },
     {
         path: "/login",
-        component: "Login",
+        component: "Login"
     },
     {
         path: "/register",
@@ -14,6 +14,17 @@ export const publicRoutes = [
 
 export const authRoutes = [
     "/user"
+]
+
+export const loginAuthRoutes = [
+    {
+        path: "/login",
+        component: "Login"
+    },
+    {
+        path: "/register",
+        component: "Register"
+    }
 ]
 
 export const apiRoute = "/api/auth"

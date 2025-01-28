@@ -1,18 +1,19 @@
 import authConfig from "./auth.config";
 import NextAuth from "next-auth";
-import { DEFAULT_REDIRECT, publicRoutes, apiRoute, authRoutes, helloRoute } from "@/routes";
+import { DEFAULT_REDIRECT, publicRoutes, apiRoute, authRoutes, helloRoute, loginAuthRoutes } from "@/routes";
 
 const { auth } = NextAuth(authConfig);
 
-export default auth((req) => {
+export default auth(async (req) => {
   const { nextUrl } = req;
-  const isLoggedIn = !!req.auth;
-  console.log("IS LOGGED IN:", isLoggedIn);
+  const session = await auth();
+  const isLoggedIn = !!session; // Проверка, есть ли сессия
 
   const privateRoute = authRoutes.includes(nextUrl.pathname);
-
-  if ( privateRoute && !isLoggedIn) {
-    return Response.redirect(new URL("/login", req.url));
+  const isLoginRoutes = loginAuthRoutes.some((route) => route.path === nextUrl.pathname);
+  
+  if (isLoginRoutes && isLoggedIn) {
+    return Response.redirect(new URL(`/user/${session.user.id}`, req.url)); // Редирект на пользователя
   }
 
   if (helloRoute === nextUrl.pathname && isLoggedIn) {
