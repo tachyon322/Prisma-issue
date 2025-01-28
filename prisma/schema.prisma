@@ -30,6 +30,8 @@ model User {
   posts         Post[]
   comments      Comment[]
   cloths        Cloth[]
+  outfits       Outfit[]
+  collections   Collection[]
   subscriptions Subscription[] @relation("Subscriber")
   subscribedTo  Subscription[] @relation("SubscribedTo")
 
@@ -131,51 +133,72 @@ model Comment {
 }
 
 model Cloth {
-  id     Int      @id @default(autoincrement())
-  name   String
-  rating Int
-  isAd   IsAd     @default(AdFree)
-  image  Image[]
-  brands Brand[]  @relation("ClothBrands")
-  outfit Outfit[]
-  style  Style[]
-  User   User?    @relation(fields: [userId], references: [id])
-  userId String?
+  id         Int          @id @default(autoincrement())
+  name       String
+  rating     Int
+  isAd       IsAd         @default(AdFree)
+  image      Image[]
+  brands     Brand[]      @relation("ClothBrands")
+  outfit     Outfit[]
+  collection Collection[]
+  style      Style[]
+  User       User?        @relation(fields: [userId], references: [id])
+  userId     String?
 }
 
 model Brand {
-  id          Int     @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   name        String
   rating      Int
   description String
-  cloths      Cloth[] @relation("ClothBrands")
+  cloths      Cloth[]      @relation("ClothBrands")
   style       Style[]
+  outfit      Outfit[]
+  collection  Collection[]
 }
 
 model Outfit {
-  id          Int     @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   title       String
   description String
-  image_id    Image?  @relation(fields: [imageId], references: [id], onDelete: Cascade)
+  image_id    Image?       @relation(fields: [imageId], references: [id], onDelete: Cascade)
   imageId     Int?
   cloths      Cloth[]
   style       Style[]
+  user        User[]
+  brand       Brand[]
+  collction   Collection[]
+}
+
+model Collection {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  image_id    Image?   @relation(fields: [imageId], references: [id], onDelete: Cascade)
+  imageId     Int?
+  cloths      Cloth[]
+  outfits     Outfit[]
+  style       Style[]
+  brand       Brand[]
+  user        User[]
 }
 
 model Style {
-  id     Int      @id @default(autoincrement())
-  name   String
-  cloth  Cloth[]
-  brand  Brand[]
-  outfit Outfit[]
+  id         Int          @id @default(autoincrement())
+  name       String
+  cloth      Cloth[]
+  brand      Brand[]
+  outfit     Outfit[]
+  collection Collection[]
 }
 
 model Image {
-  id       Int      @id @default(autoincrement())
-  url      String?  @unique
-  postId   Int?
-  post     Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
-  cloth_id Cloth?   @relation(fields: [clothId], references: [id], onDelete: Cascade)
-  clothId  Int?
-  Outfit   Outfit[]
+  id         Int          @id @default(autoincrement())
+  url        String?      @unique
+  postId     Int?
+  post       Post?        @relation(fields: [postId], references: [id], onDelete: Cascade)
+  cloth_id   Cloth?       @relation(fields: [clothId], references: [id], onDelete: Cascade)
+  clothId    Int?
+  Outfit     Outfit[]
+  Collection Collection[]
 }
