@@ -1,4 +1,3 @@
-// components/login/Logout.tsx
 import React from 'react';
 import { signOutAction } from '@/actions/logout';
 

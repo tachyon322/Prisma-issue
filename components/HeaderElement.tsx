@@ -8,19 +8,28 @@ import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { fetchUserSession } from "@/data/user";
 
+interface UserSession {
+  user: {
+    id: string;
+    name: string;
+    image: string;
+  } | null; // user может быть null
+}
+
 export default function HeaderElement() {
-  const [userSession, setUserSession] = useState<any | null>(null);
+  const [userSession, setUserSession] = useState<UserSession | null>(null);
 
   useEffect(() => {
     const loadData = async () => {
       const sessionData = await fetchUserSession();
-      setUserSession(sessionData)
+      setUserSession(sessionData);
     };
 
     loadData();
   }, []);
 
   const userImage = userSession?.user?.image;
+  const userId = userSession?.user?.id; // Сохраняет идентификатор пользователя
 
   return (
     <div className="flex items-center justify-between gap-10 pt-2.5 mb-10">
@@ -28,33 +37,20 @@ export default function HeaderElement() {
         <Image src={logo} width={150} height={50} alt="logo" />
       </Link>
 
-      <ul className="flex gap-6 justify-center flex-1 ">
-        <li className="btn-anim1">
-          <Link href={"/newest"}>
-            <p>главная</p>
-          </Link>
-        </li>
-        <li className="btn-anim1">
-          <Link href={"/newest"}>
-            <p>вещи</p>
-          </Link>
-        </li>
-        <li className="btn-anim1">
-          <Link href={"/main"}>
-            <p>коллекции</p>
-          </Link>
-        </li>
-        <li className="btn-anim1">
-          <Link href={"/main"}>
-            <p>о нас</p>
-          </Link>
-        </li>
+      <ul className="flex gap-6 justify-center flex-1">
+        {["главная", "вещи", "коллекции", "о нас"].map((item) => (
+          <li key={item} className="btn-anim1">
+            <Link href={"/newest"}>
+              <p>{item}</p>
+            </Link>
+          </li>
+        ))}
       </ul>
 
-      {userSession ? (
+      {userId ? ( 
         <Link
           className="flex items-center gap-3 flex-1 justify-end"
-          href={`/user/${userSession?.user?.id}`}
+          href={`/user/${userId}`}
         >
           <div className="">
             {userImage === "" ? (
@@ -83,10 +79,7 @@ export default function HeaderElement() {
           </div>
         </Link>
       ) : (
-        <Link
-          className="flex items-center gap-3 flex-1 justify-end"
-          href="/login"
-        >
+        <Link className="flex items-center gap-3 flex-1 justify-end" href="/login">
           <Button>
             <p>Войти</p>
           </Button>
