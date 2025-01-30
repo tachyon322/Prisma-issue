@@ -1,0 +1,42 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { getOutfits } from "@/data/outfit";
+import Link from "next/link";
+
+export default function Outfit() {
+  const [outfit, setOutfit] = useState([]);
+
+  useEffect(() => {
+    getOutfits().then((data: any) => {
+      setOutfit(data || []);
+    });
+  }, []);
+
+  const sortedOutfit = [...outfit]
+    .sort((a: any, b: any) => b.createdAt - a.createdAt)
+    .slice(0, 3);
+
+  return (
+    <Link href={"/user"} className="flex gap-5">
+      {sortedOutfit.map((item: any) => {
+        return (
+          <div
+            key={item.id}
+            className="flex flex-col border-2 border-black rounded-lg p-4 gap-2">
+            <p>{item.title}</p>
+            <div className="grid grid-cols-2">
+              {item.cloths.map((cloth: any) => {
+                return (
+                  <div
+                    key={cloth.id}
+                    className="flex border-2 border-black rounded-lg p-4 flex-row gap-2"></div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
+    </Link>
+  );
+}
