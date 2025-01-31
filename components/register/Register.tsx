@@ -19,6 +19,10 @@ import YandexLoginButton from "../socialButtons/Yandex";
 import Link from "next/link";
 import { registerAction } from "@/actions/register";
 import { CardHeader } from "../ui/card";
+import { AlertCircle } from "lucide-react";
+import { MdDone as AlertSuccess } from "react-icons/md";
+
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function Register() {
   const [error, setError] = useState<string | undefined>("");
@@ -133,8 +137,27 @@ export default function Register() {
               </FormItem>
             )}
           />
+
+          {error ? (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>
+                Что то пошло не так, возможно этот аккаунт уже зарегистрирован
+              </AlertDescription>
+            </Alert>
+          ) : null}
+
+          {success ? (
+            <Alert variant="success">
+              <AlertSuccess className="h-4 w-4" />
+              <AlertDescription>
+                Успешно зарегистрирован, пожалуйста, проверьте вашу почту
+              </AlertDescription>
+            </Alert>
+          ) : null}
+
           <Button type="submit">
-            <p>Войти</p>
+            <p>Зарегистрироваться</p>
           </Button>
         </form>
       </Form>
@@ -143,7 +166,7 @@ export default function Register() {
         <YandexLoginButton />
 
         <Link href="/login" className="hover:underline">
-          <p>Уже зарегистрированы?</p>
+          <p>Уже зарегистрированы? Войдите</p>
         </Link>
       </div>
     </div>

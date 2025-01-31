@@ -28,12 +28,14 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import YandexLoginButton from "../socialButtons/Yandex";
 import { loginAction } from "@/actions/login";
+import { Alert, AlertDescription } from "../ui/alert";
+import { AlertCircle } from "lucide-react";
 
 export default function Login() {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
 
-  const [isPending, startTransition] = useTransition()
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -45,12 +47,10 @@ export default function Login() {
 
   async function onSubmit(values: z.infer<typeof LoginSchema>) {
     startTransition(() => {
-      loginAction(values)
-      .then((data) => {
-
-        setError(data.error || undefined)
-      })
-    })
+      loginAction(values).then((data) => {
+        setError(data.error || undefined);
+      });
+    });
   }
 
   return (
@@ -63,7 +63,11 @@ export default function Login() {
       </CardHeader>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col space-y-8" style={{width: "300px"}} >
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col space-y-8"
+          style={{ width: "300px" }}
+        >
           <FormField
             control={form.control}
             name="email"
@@ -105,10 +109,19 @@ export default function Login() {
               </FormItem>
             )}
           />
+
+          {error ? (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>
+                Что то пошло не так, возможно этот аккаунт не существует
+              </AlertDescription>
+            </Alert>
+          ) : null}
+
           <Button type="submit">
             <p>Войти</p>
           </Button>
-
         </form>
       </Form>
 
@@ -116,7 +129,7 @@ export default function Login() {
         <YandexLoginButton />
 
         <Link href={"/register"} className="hover:underline">
-            <p>Нет аккаунта? Зарегистрируйтесь</p>
+          <p>Нет аккаунта? Зарегистрируйтесь</p>
         </Link>
       </div>
     </div>

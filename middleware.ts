@@ -1,27 +1,32 @@
-import authConfig from "./auth.config";
-import NextAuth from "next-auth";
-import { DEFAULT_REDIRECT, publicRoutes, apiRoute, authRoutes, helloRoute, loginAuthRoutes } from "@/routes";
+import { authRoute, helloRoute, loginAuthRoutes } from "@/routes";
 
-const { auth } = NextAuth(authConfig);
+import { auth } from "./auth";
+import { NextRequest } from "next/server";
 
-export default auth(async (req) => {
+export default auth(async function middleware(req: NextRequest) {
   const { nextUrl } = req;
   const session = await auth();
-  const isLoggedIn = !!session; // Проверка, есть ли сессия
+  const isLoggedIn = !!session;
 
-  const privateRoute = authRoutes.includes(nextUrl.pathname);
-  const isLoginRoutes = loginAuthRoutes.some((route) => route.path === nextUrl.pathname);
-  
+  const privateRoute = authRoute.includes(nextUrl.pathname); // редирект с user на user/id {Я ХЗ КАК ОНО РАБОТАЛО ПОЭТОМУ ТАК}
+  const isLoginRoutes = loginAuthRoutes.some(
+    (route) => route.path === nextUrl.pathname
+  );
+
   if (isLoginRoutes && isLoggedIn) {
-    return Response.redirect(new URL(`/user/${session.user.id}`, req.url)); // Редирект на пользователя
+    return Response.redirect(new URL(`/user/${session.user.id}`, req.url));
   }
 
   if (helloRoute === nextUrl.pathname && isLoggedIn) {
     return Response.redirect(new URL("/newest", req.url));
   }
+
+  if (privateRoute && isLoggedIn) {
+    return Response.redirect(new URL(`/user/${session.user.id}`, req.url));
+  }
+
 });
 
-// Optionally, don't invoke Middleware on some paths
 export const config = {
   matcher: [
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",

@@ -4,6 +4,7 @@ import * as z from "zod";
 import { LoginSchema } from "@/schemas/authSchema";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
+import { DEFAULT_REDIRECT } from "@/routes";
 
 export const loginAction = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values);
@@ -16,6 +17,7 @@ export const loginAction = async (values: z.infer<typeof LoginSchema>) => {
     await signIn("credentials", {
       email,
       password,
+      redirectTo: DEFAULT_REDIRECT,
     });
   } catch (error) {
       console.error("Authentication Error: ", error); 
@@ -25,7 +27,7 @@ export const loginAction = async (values: z.infer<typeof LoginSchema>) => {
           return { error: "Invalid credentials!" };
 
         default:
-          return { error: "Something went wrong!" };
+          return { error: "Что то пошло не так!" };
       }
     }
 

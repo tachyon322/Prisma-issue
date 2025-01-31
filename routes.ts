@@ -12,9 +12,7 @@ export const publicRoutes = [
     },
 ]
 
-export const authRoutes = [
-    "/user"
-]
+export const authRoute = "/user"
 
 export const loginAuthRoutes = [
     {

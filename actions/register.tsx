@@ -1,7 +1,5 @@
 "use server";
 
-import * as z from "zod";
-import { SignupSchema } from "@/schemas/authSchema";
 import bcrypt from "bcrypt";
 import { db } from "@/db";
 import { getUserByEmail } from "@/data/user";
