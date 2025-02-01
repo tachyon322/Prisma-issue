@@ -7,7 +7,7 @@ import userBlankLogo from "@/app/assets/svg/userBlankLogo.svg";
 import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { fetchUserSession } from "@/data/user";
-import UserProfile from "./image/UserAvatar";
+import { UserSession } from "@/types";
 
 export default function HeaderElement() {
   const [userSession, setUserSession] = useState<UserSession | null>(null);

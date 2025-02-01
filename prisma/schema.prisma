@@ -33,7 +33,7 @@ model User {
   outfits       Outfit[]
   collections   Collection[]
   subscriptions Subscription[] @relation("Subscriber")
-  subscribedTo  Subscription[] @relation("SubscribedTo")
+  subscribers  Subscription[] @relation("SubscribedTo")
 
   //auth.js required*
   accounts      Account[]

@@ -25,7 +25,7 @@ export const loginAuthRoutes = [
     }
 ]
 
-export const apiRoute = "/api/auth"
+export const apiRoute = "/api"
 
 export const helloRoute = "/"
 

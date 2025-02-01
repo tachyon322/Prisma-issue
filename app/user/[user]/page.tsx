@@ -5,14 +5,7 @@ import Logout from "@/components/login/Logout";
 import HeaderElement from "@/components/HeaderElement";
 import { fetchUserProfile, fetchUserSession } from "@/data/user";
 import AuthUser from "@/components/user/AuthUser";
-
-interface UserProfile {
-  id: string;
-  name: string;
-  email: string;
-  image?: string;
-  role: string;
-}
+import { UserProfile, UserSession } from "@/types";
 
 interface PageProps {
   params: {
@@ -22,7 +15,7 @@ interface PageProps {
 
 export default function Page({ params }: PageProps) {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
-  const [userSession, setUserSession] = useState<any | null>(null);
+  const [userSession, setUserSession] = useState<UserSession | null>(null);
   const userID = params.user;
 
   useEffect(() => {
@@ -37,15 +30,17 @@ export default function Page({ params }: PageProps) {
     loadData();
   }, [userID]);
 
+  const isLoading = !userProfile; // Определяем, загружаются ли данные
+
   return (
     <div className="wide-wrap">
       <HeaderElement />
 
       <AuthUser userProfile={userProfile} userSession={userSession} />
 
-      {userSession?.user && (
+      {userSession?.user?.id === userProfile?.id && (
         <div className="">
-          <Logout />
+          {isLoading ? null : <Logout />}
         </div>
       )}
     </div>

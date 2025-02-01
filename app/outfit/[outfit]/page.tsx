@@ -3,29 +3,7 @@
 import { getOutfitById } from "@/data/outfit";
 import React, { useEffect, useState } from "react";
 import ClothList from "@/components/outfit/ClothList";
-
-interface ClothImage {
-  id: number;
-  url: string | null;
-  postId: number | null;
-  clothId: number | null;
-}
-
-interface Cloth {
-  id: number;
-  name: string;
-  rating: number;
-  isAd: string;
-  userId: string | null;
-  image: ClothImage[];
-}
-
-interface OutfitType {
-  id: number;
-  title?: string;
-  description?: string;
-  cloths: Cloth[];
-}
+import { OutfitType } from "@/types";
 
 export default function Outfit({ params }: { params: { outfit: string } }) {
   const [outfit, setOutfit] = useState<OutfitType | null>(null);
