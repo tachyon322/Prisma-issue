@@ -4,6 +4,7 @@ import { getUserById } from "./data/user";
 import authConfig from "./auth.config";
 import { db } from "./db";
 
+
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {

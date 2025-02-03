@@ -2,7 +2,7 @@ import { db } from "@/db";
 
 export const getUserByEmail = async (email: string) => {
   try {
-    const user = await db.user.findUnique({ where: { email } });
+    const user = await db.user.findUnique({ where: { email },  cacheStrategy: { ttl: 60 }, });
 
     return user;
   } catch {
@@ -12,7 +12,7 @@ export const getUserByEmail = async (email: string) => {
 
 export const getUserById = async (id: any) => {
   try {
-    const user = await db.user.findUnique({ where: { id } });
+    const user = await db.user.findUnique({ where: { id },  cacheStrategy: { ttl: 60 }, });
     return user;
   } catch (error) {
     console.error("Ошибка при получении пользователя:", error);
